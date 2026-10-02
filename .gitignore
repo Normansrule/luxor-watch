@@ -1,0 +1,17 @@
+# ESP-IDF
+build/
+managed_components/
+dependencies.lock
+sdkconfig
+sdkconfig.old
+# host tools
+tests/build/
+tools/ui_sim/build/
+tools/ui_sim/luxor_sim
+tools/ui_sim/frames/
+tools/ui_sim/gallery_*.png
+# python
+__pycache__/
+.venv/
+# release scratch
+luxor-v*-stl.zip

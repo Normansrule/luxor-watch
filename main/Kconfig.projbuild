@@ -1,0 +1,50 @@
+menu "LUXOR"
+
+config RW_WIFI_SSID
+    string "Your own 2.4 GHz WPA2/WPA3 network SSID"
+    default ""
+
+config RW_WIFI_PASSWORD
+    string "Wi-Fi password (stored in your local build; do not publish)"
+    default ""
+
+config RW_TIMEZONE
+    string "POSIX timezone string"
+    default "PST8PDT,M3.2.0,M11.1.0"
+    help
+        POSIX TZ string used for every displayed time.  The default is US
+        Pacific with the usual daylight-saving rules.  Other examples:
+          US Eastern   EST5EDT,M3.2.0,M11.1.0
+          UK           GMT0BST,M3.5.0/1,M10.5.0
+          Central Eur. CET-1CEST,M3.5.0,M10.5.0/3
+          Japan        JST-9
+          UTC          UTC0
+        The 12/24-hour choice is NOT here - it is a runtime setting, under
+        Settings, so it can be changed on the watch.
+
+config RW_STEP_GOAL
+    int "Default daily step goal"
+    range 1000 40000
+    default 8000
+
+config RW_STRIDE_CM
+    int "Default stride length in centimeters"
+    range 30 150
+    default 75
+
+# NOTE: there is intentionally no RW_IMU_MAP symbol any more.  The IMU axis
+# map default is LUX_IMU_MAP_DEFAULT in main/luxconf.h, and the live value is
+# a runtime setting (Settings -> Motion setup, or the flip control on the maze
+# screen).  Keeping it out of Kconfig means a stale sdkconfig can never put an
+# old value back.
+
+config RW_CSI_EXPERIMENT
+    bool "Enable on-demand CSI channel statistics on your own AP"
+    default n
+
+config RW_ADC_SCALE_PERMILLE
+    int "Battery ADC calibration correction; 1000 = nominal divider"
+    range 800 1200
+    default 1000
+
+endmenu

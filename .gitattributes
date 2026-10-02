@@ -1,0 +1,6 @@
+*.stl  binary linguist-generated
+*.bin  binary
+*.raw  binary
+*.png  binary
+*.svg  text linguist-generated
+main/fonts/lux_inter_*.c linguist-generated

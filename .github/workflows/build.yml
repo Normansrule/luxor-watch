@@ -1,0 +1,59 @@
+name: Build and check
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  host-tests:
+    # Geometry, gesture, motion and battery logic are plain C: seconds to run.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Host tests
+        run: make -C tests
+      - name: UI simulator audit (clipped text, missing glyphs, 44 px touch areas)
+        run: |
+          git clone --depth 1 --branch v8.3.11 https://github.com/lvgl/lvgl.git /tmp/lvgl
+          make -C tools/ui_sim LVGL_DIR=/tmp/lvgl -j4 check
+
+  cad:
+    # Every STL must match its OpenSCAD source, print without supports and
+    # fit the other parts without collisions.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tools
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q openscad
+          pip install -q trimesh numpy scipy networkx
+      - name: STLs match the sources
+        run: |
+          hardware/render_all.sh /tmp/fresh
+          python3 hardware/check_stl_fresh.py /tmp/fresh
+      - name: Printability
+        run: python3 hardware/check_print.py
+      - name: Fit
+        run: python3 hardware/check_fit.py
+
+  firmware:
+    needs: host-tests
+    runs-on: ubuntu-latest
+    container: espressif/idf:v5.5.5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with ESP-IDF 5.5.5
+        shell: bash
+        run: |
+          . /opt/esp/idf/export.sh
+          idf.py set-target esp32s3
+          idf.py build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: luxor-firmware
+          path: |
+            build/luxor.bin
+            build/bootloader/bootloader.bin
+            build/partition_table/partition-table.bin
+            build/flasher_args.json

@@ -1,0 +1,68 @@
+# ---------------------------------------------------------------- target
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+
+# ------------------------------------------------------------ memory/RTOS
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=12288
+CONFIG_FREERTOS_HZ=1000
+
+# ----------------------------------------------------------------- radios
+CONFIG_BT_ENABLED=y
+CONFIG_BT_NIMBLE_ENABLED=y
+CONFIG_BT_NIMBLE_ROLE_PERIPHERAL=y
+CONFIG_BT_NIMBLE_ROLE_CENTRAL=y
+CONFIG_BT_NIMBLE_ROLE_OBSERVER=y
+CONFIG_BT_NIMBLE_ROLE_BROADCASTER=y
+CONFIG_BT_NIMBLE_MAX_CONNECTIONS=1
+CONFIG_BT_NIMBLE_MAX_BONDS=2
+CONFIG_BT_NIMBLE_NVS_PERSIST=y
+CONFIG_BT_NIMBLE_SM_SC=y
+CONFIG_ESP_WIFI_CSI_ENABLED=y
+
+# ------------------------------------------------------------- networking
+# Simple Network Time Protocol (SNTP) keeps the clock honest once the watch
+# has seen a network; the RTC chip carries it across reboots.
+CONFIG_LWIP_SNTP_MAX_SERVERS=2
+
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+
+# ------------------------------------------------------------------- LVGL
+CONFIG_LV_COLOR_DEPTH_16=y
+CONFIG_LV_COLOR_DEPTH=16
+# The SPD2010 wants big-endian RGB565.  Letting LVGL emit it directly removes
+# a per-pixel byte swap the CPU used to do on every single flush.
+CONFIG_LV_COLOR_16_SWAP=y
+CONFIG_LV_MEM_CUSTOM=y
+
+# v8: the interface uses the Inter fonts in main/fonts/.  Only LVGL's
+# default Montserrat 14 is still built in (widget fallback).
+
+# Widgets the reworked interface relies on.
+CONFIG_LV_USE_METER=y
+CONFIG_LV_USE_CANVAS=y
+CONFIG_LV_USE_SLIDER=y
+CONFIG_LV_USE_SWITCH=y
+CONFIG_LV_USE_ARC=y
+CONFIG_LV_USE_IMG=y
+CONFIG_LV_DRAW_COMPLEX=y
+# Dither gradients: without it, subtle 16-bit gradients show a hard band.
+CONFIG_LV_DITHER_GRADIENT=y
+CONFIG_LV_SHADOW_CACHE_SIZE=0
+
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+
+# ----------------------------------------------------------- responsiveness
+# Touch is sampled every 10 ms and the screen refreshes at ~60 Hz instead of
+# LVGL's 30 ms / 30 ms defaults.  Both make taps land where the finger is.
+CONFIG_LV_INDEV_DEF_READ_PERIOD=10
+CONFIG_LV_DISP_DEF_REFR_PERIOD=16
+CONFIG_LV_INDEV_DEF_GESTURE_LIMIT=40
+CONFIG_LV_INDEV_DEF_GESTURE_MIN_VELOCITY=3

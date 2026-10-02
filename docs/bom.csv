@@ -1,0 +1,17 @@
+id,category,item,qty,spec,where_to_get,est_unit_usd,gate,status
+B1,electronics,Waveshare ESP32-S3-Touch-LCD-1.46 round display module (cover-glass variant),1,"ESP32-S3R8, 16 MB flash, 412x412 SPD2010, touch, QMI8658, PCF85063, speaker, mic, LiPo charger",https://www.waveshare.com/esp32-s3-touch-lcd-1.46b.htm,22-27,"buy the variant WITH cover glass: the case lip retains the glass",required
+B2,electronics,Single-cell LiPo with protection circuit,1,"402530 (4.0 x 25 x 30 mm, ~250 mAh), MX1.25 2-pin plug; 302530 for a thinner watch",search: 402530 lipo MX1.25,6-10,"check plug polarity against the board header with a multimeter",required
+B3,electronics,USB-C data cable with slim overmould,1,"must carry data; overmould <= 12.5 x 7 mm",search: slim USB C data cable,6-10,"measure overmould; set cable_w / cable_h",required
+B4,optional,microSD card,1,any size (roadmap: storage readout),any,5-8,,optional
+H1,hardware,M2 x 6 screw (pan or socket head),3,"stainless; the OpenSCAD render prints the exact length for your m2_engage",search: M2x6 socket head stainless,0.10,"measure standoff thread depth",required
+H2,hardware,22 mm quick-release watch strap,1,"quick-release pins, 1.5 mm spring-bar body",search: 22mm quick release watch band,10-25,"coupon C passes",required
+H3,hardware,22 mm spring bars,2,"1.5 mm body, ~0.8 mm tips (spares)",search: 22mm quick release spring bars 1.5mm,0.50,,recommended
+H4,hardware,Gasket ring,1,"0.3 mm closed-cell foam or EPDM, cut to 41 / 45.5 mm ring",search: 0.3mm foam gasket tape,5-8,,required
+H5,hardware,Kapton tape,1,10-20 mm wide,search: kapton tape 20mm,5-8,,required
+H6,hardware,Thin CA glue or 0.1 mm double-sided tape,1,fixes the gold inlay,any,4-6,,required
+H7,optional,M8 steel washers 16 mm OD,4,dock ballast,any,0.20,,optional
+P1,printed,01_case_shell,1,"PLA+ or PETG, matte black or ivory, 0.12 mm layers, 4 walls, 40 % infill, face-down, no supports",hardware/stl/01_case_shell.stl,~6 g,"coupons A + C pass",required
+P2,printed,02_back_cover,1,"same material, back-down, no supports",hardware/stl/02_back_cover.stl,~5 g,"coupon B passes",required
+P3,printed,03_bezel_ring,1,"silk gold PLA, 0.08-0.12 mm layers, 100 % infill",hardware/stl/03_bezel_ring.stl,<1 g,"coupon A inlay fit",recommended
+P4,printed,04_charging_dock,1,"any PLA, 0.2 mm, 20 % infill",hardware/stl/04_charging_dock.stl,~70 g,,optional
+P5,printed,coupons A / B / C,1 each,"same material and settings as the real parts",hardware/stl/coupon_*.stl,~8 g,print FIRST,required

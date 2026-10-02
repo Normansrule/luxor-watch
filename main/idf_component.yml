@@ -1,0 +1,4 @@
+dependencies:
+  idf: ">=5.4.2,<5.6.0"
+  espressif/esp_lcd_spd2010: "==2.0.0~1"
+  lvgl/lvgl: "==8.3.11"
